@@ -1,6 +1,6 @@
 const __pluginConfig =  {
   "name": "windy-plugin-ofp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "icon": "✈️",
   "title": "OFP Route",
   "description": "OFPのGPXルートをWindy上に表示し、各ウェイポイントの気象データを取得します。",
@@ -10,8 +10,8 @@ const __pluginConfig =  {
   "mobileUI": "fullscreen",
   "routerPath": "/ofp-route",
   "private": true,
-  "built": 1774262982499,
-  "builtReadable": "2026-03-23T10:49:42.499Z",
+  "built": 1774263569722,
+  "builtReadable": "2026-03-23T10:59:29.722Z",
   "screenshot": "screenshot.jpg"
 };
 
@@ -698,19 +698,19 @@ function add_css(target) {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[25] = list[i];
+	child_ctx[26] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[25] = list[i];
+	child_ctx[26] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[30] = list[i];
+	child_ctx[31] = list[i];
 	return child_ctx;
 }
 
@@ -721,15 +721,15 @@ function create_each_block_2(ctx) {
 	let dispose;
 
 	function click_handler_1() {
-		return /*click_handler_1*/ ctx[14](/*ov*/ ctx[30]);
+		return /*click_handler_1*/ ctx[15](/*ov*/ ctx[31]);
 	}
 
 	return {
 		c() {
 			button = element("button");
-			button.textContent = `${/*ov*/ ctx[30].icon} ${/*ov*/ ctx[30].label}`;
+			button.textContent = `${/*ov*/ ctx[31].icon} ${/*ov*/ ctx[31].label}`;
 			attr(button, "class", "ofp-ov-btn svelte-1ychhp6");
-			toggle_class(button, "ofp-ov-active", /*currentOverlay*/ ctx[1] === /*ov*/ ctx[30].key);
+			toggle_class(button, "ofp-ov-active", /*currentOverlay*/ ctx[0] === /*ov*/ ctx[31].key);
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -742,8 +742,8 @@ function create_each_block_2(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty[0] & /*currentOverlay, OVERLAY_OPTIONS*/ 66) {
-				toggle_class(button, "ofp-ov-active", /*currentOverlay*/ ctx[1] === /*ov*/ ctx[30].key);
+			if (dirty[0] & /*currentOverlay, OVERLAY_OPTIONS*/ 129) {
+				toggle_class(button, "ofp-ov-active", /*currentOverlay*/ ctx[0] === /*ov*/ ctx[31].key);
 			}
 		},
 		d(detaching) {
@@ -757,15 +757,15 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (37:4) {#if currentOverlay === 'wind'}
-function create_if_block_4(ctx) {
+// (37:4) {#if currentOverlayHasLevel}
+function create_if_block_5(ctx) {
 	let div;
 	let label;
 	let t1;
 	let select;
 	let mounted;
 	let dispose;
-	let each_value_1 = ensure_array_like(/*LEVEL_OPTIONS*/ ctx[8]);
+	let each_value_1 = ensure_array_like(/*LEVEL_OPTIONS*/ ctx[9]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
@@ -787,7 +787,7 @@ function create_if_block_4(ctx) {
 			attr(label, "class", "ofp-label svelte-1ychhp6");
 			set_style(label, "margin-bottom", "0");
 			attr(select, "class", "ofp-fl-select svelte-1ychhp6");
-			if (/*selectedLevel*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[15].call(select));
+			if (/*selectedLevel*/ ctx[1] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[16].call(select));
 			attr(div, "class", "ofp-section ofp-fl-row svelte-1ychhp6");
 		},
 		m(target, anchor) {
@@ -802,20 +802,20 @@ function create_if_block_4(ctx) {
 				}
 			}
 
-			select_option(select, /*selectedLevel*/ ctx[0], true);
+			select_option(select, /*selectedLevel*/ ctx[1], true);
 
 			if (!mounted) {
 				dispose = [
-					listen(select, "change", /*select_change_handler*/ ctx[15]),
-					listen(select, "change", /*onFlChange*/ ctx[9])
+					listen(select, "change", /*select_change_handler*/ ctx[16]),
+					listen(select, "change", /*onFlChange*/ ctx[10])
 				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*LEVEL_OPTIONS*/ 256) {
-				each_value_1 = ensure_array_like(/*LEVEL_OPTIONS*/ ctx[8]);
+			if (dirty[0] & /*LEVEL_OPTIONS*/ 512) {
+				each_value_1 = ensure_array_like(/*LEVEL_OPTIONS*/ ctx[9]);
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
@@ -837,8 +837,8 @@ function create_if_block_4(ctx) {
 				each_blocks.length = each_value_1.length;
 			}
 
-			if (dirty[0] & /*selectedLevel, LEVEL_OPTIONS*/ 257) {
-				select_option(select, /*selectedLevel*/ ctx[0]);
+			if (dirty[0] & /*selectedLevel, LEVEL_OPTIONS*/ 514) {
+				select_option(select, /*selectedLevel*/ ctx[1]);
 			}
 		},
 		d(detaching) {
@@ -856,10 +856,10 @@ function create_if_block_4(ctx) {
 // (41:12) {#each LEVEL_OPTIONS as lv}
 function create_each_block_1(ctx) {
 	let option;
-	let t0_value = /*lv*/ ctx[25].label + "";
+	let t0_value = /*lv*/ ctx[26].label + "";
 	let t0;
 	let t1;
-	let t2_value = /*lv*/ ctx[25].fl + "";
+	let t2_value = /*lv*/ ctx[26].fl + "";
 	let t2;
 
 	return {
@@ -868,7 +868,7 @@ function create_each_block_1(ctx) {
 			t0 = text(t0_value);
 			t1 = text(" ≈ FL");
 			t2 = text(t2_value);
-			option.__value = /*lv*/ ctx[25].level;
+			option.__value = /*lv*/ ctx[26].level;
 			set_input_value(option, option.__value);
 		},
 		m(target, anchor) {
@@ -909,7 +909,7 @@ function create_else_block_1(ctx) {
 }
 
 // (49:4) {#if routeName}
-function create_if_block_3(ctx) {
+function create_if_block_4(ctx) {
 	let div2;
 	let div0;
 	let t0;
@@ -954,7 +954,7 @@ function create_if_block_3(ctx) {
 			insert(target, button, anchor);
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*clearRoute*/ ctx[11]);
+				dispose = listen(button, "click", /*clearRoute*/ ctx[12]);
 				mounted = true;
 			}
 		},
@@ -983,9 +983,58 @@ function create_if_block(ctx) {
 	let t1_value = /*selectedWpt*/ ctx[4].name + "";
 	let t1;
 	let t2;
+	let if_block = /*selectedWpt*/ ctx[4].levels && create_if_block_1(ctx);
+
+	return {
+		c() {
+			div1 = element("div");
+			div0 = element("div");
+			t0 = text("📍 ");
+			t1 = text(t1_value);
+			t2 = space();
+			if (if_block) if_block.c();
+			attr(div0, "class", "ofp-wpt-name svelte-1ychhp6");
+			attr(div1, "class", "ofp-section ofp-wx-box svelte-1ychhp6");
+		},
+		m(target, anchor) {
+			insert(target, div1, anchor);
+			append(div1, div0);
+			append(div0, t0);
+			append(div0, t1);
+			append(div1, t2);
+			if (if_block) if_block.m(div1, null);
+		},
+		p(ctx, dirty) {
+			if (dirty[0] & /*selectedWpt*/ 16 && t1_value !== (t1_value = /*selectedWpt*/ ctx[4].name + "")) set_data(t1, t1_value);
+
+			if (/*selectedWpt*/ ctx[4].levels) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+				} else {
+					if_block = create_if_block_1(ctx);
+					if_block.c();
+					if_block.m(div1, null);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
+		},
+		d(detaching) {
+			if (detaching) {
+				detach(div1);
+			}
+
+			if (if_block) if_block.d();
+		}
+	};
+}
+
+// (63:12) {#if selectedWpt.levels}
+function create_if_block_1(ctx) {
 	let table;
 	let thead;
-	let t8;
+	let t5;
 	let tbody;
 	let each_value = ensure_array_like(/*selectedWpt*/ ctx[4].levels);
 	let each_blocks = [];
@@ -996,34 +1045,22 @@ function create_if_block(ctx) {
 
 	return {
 		c() {
-			div1 = element("div");
-			div0 = element("div");
-			t0 = text("📍 ");
-			t1 = text(t1_value);
-			t2 = space();
 			table = element("table");
 			thead = element("thead");
 			thead.innerHTML = `<tr><th class="ofp-th svelte-1ychhp6">高度</th> <th class="ofp-th svelte-1ychhp6" style="text-align:right">風向</th> <th class="ofp-th svelte-1ychhp6" style="text-align:right">風速</th></tr>`;
-			t8 = space();
+			t5 = space();
 			tbody = element("tbody");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(div0, "class", "ofp-wpt-name svelte-1ychhp6");
 			attr(table, "class", "ofp-wind-table svelte-1ychhp6");
-			attr(div1, "class", "ofp-section ofp-wx-box svelte-1ychhp6");
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
-			append(div1, div0);
-			append(div0, t0);
-			append(div0, t1);
-			append(div1, t2);
-			append(div1, table);
+			insert(target, table, anchor);
 			append(table, thead);
-			append(table, t8);
+			append(table, t5);
 			append(table, tbody);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -1033,9 +1070,7 @@ function create_if_block(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*selectedWpt*/ 16 && t1_value !== (t1_value = /*selectedWpt*/ ctx[4].name + "")) set_data(t1, t1_value);
-
-			if (dirty[0] & /*selectedWpt, selectedLevel*/ 17) {
+			if (dirty[0] & /*selectedWpt, selectedLevel*/ 18) {
 				each_value = ensure_array_like(/*selectedWpt*/ ctx[4].levels);
 				let i;
 
@@ -1060,7 +1095,7 @@ function create_if_block(ctx) {
 		},
 		d(detaching) {
 			if (detaching) {
-				detach(div1);
+				detach(table);
 			}
 
 			destroy_each(each_blocks, detaching);
@@ -1068,15 +1103,15 @@ function create_if_block(ctx) {
 	};
 }
 
-// (79:28) {:else}
+// (80:32) {:else}
 function create_else_block(ctx) {
 	let td0;
-	let t0_value = /*lv*/ ctx[25].windDir + "";
+	let t0_value = /*lv*/ ctx[26].windDir + "";
 	let t0;
 	let t1;
 	let t2;
 	let td1;
-	let t3_value = /*lv*/ ctx[25].windSpd + "";
+	let t3_value = /*lv*/ ctx[26].windSpd + "";
 	let t3;
 	let t4;
 
@@ -1102,8 +1137,8 @@ function create_else_block(ctx) {
 			append(td1, t4);
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*selectedWpt*/ 16 && t0_value !== (t0_value = /*lv*/ ctx[25].windDir + "")) set_data(t0, t0_value);
-			if (dirty[0] & /*selectedWpt*/ 16 && t3_value !== (t3_value = /*lv*/ ctx[25].windSpd + "")) set_data(t3, t3_value);
+			if (dirty[0] & /*selectedWpt*/ 16 && t0_value !== (t0_value = /*lv*/ ctx[26].windDir + "")) set_data(t0, t0_value);
+			if (dirty[0] & /*selectedWpt*/ 16 && t3_value !== (t3_value = /*lv*/ ctx[26].windSpd + "")) set_data(t3, t3_value);
 		},
 		d(detaching) {
 			if (detaching) {
@@ -1115,8 +1150,8 @@ function create_else_block(ctx) {
 	};
 }
 
-// (77:47) 
-function create_if_block_2(ctx) {
+// (78:51) 
+function create_if_block_3(ctx) {
 	let td;
 
 	return {
@@ -1139,8 +1174,8 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (75:28) {#if lv.loading}
-function create_if_block_1(ctx) {
+// (76:32) {#if lv.loading}
+function create_if_block_2(ctx) {
 	let td;
 
 	return {
@@ -1163,18 +1198,18 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (72:20) {#each selectedWpt.levels as lv}
+// (73:24) {#each selectedWpt.levels as lv}
 function create_each_block(ctx) {
 	let tr;
 	let td;
-	let t0_value = /*lv*/ ctx[25].label + "";
+	let t0_value = /*lv*/ ctx[26].label + "";
 	let t0;
 	let t1;
 	let t2;
 
 	function select_block_type_1(ctx, dirty) {
-		if (/*lv*/ ctx[25].loading) return create_if_block_1;
-		if (/*lv*/ ctx[25].error) return create_if_block_2;
+		if (/*lv*/ ctx[26].loading) return create_if_block_2;
+		if (/*lv*/ ctx[26].error) return create_if_block_3;
 		return create_else_block;
 	}
 
@@ -1191,7 +1226,7 @@ function create_each_block(ctx) {
 			t2 = space();
 			attr(td, "class", "ofp-td-level svelte-1ychhp6");
 			attr(tr, "class", "svelte-1ychhp6");
-			toggle_class(tr, "ofp-current-level", /*lv*/ ctx[25].level === /*selectedLevel*/ ctx[0]);
+			toggle_class(tr, "ofp-current-level", /*lv*/ ctx[26].level === /*selectedLevel*/ ctx[1]);
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -1202,7 +1237,7 @@ function create_each_block(ctx) {
 			append(tr, t2);
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*selectedWpt*/ 16 && t0_value !== (t0_value = /*lv*/ ctx[25].label + "")) set_data(t0, t0_value);
+			if (dirty[0] & /*selectedWpt*/ 16 && t0_value !== (t0_value = /*lv*/ ctx[26].label + "")) set_data(t0, t0_value);
 
 			if (current_block_type === (current_block_type = select_block_type_1(ctx)) && if_block) {
 				if_block.p(ctx, dirty);
@@ -1216,8 +1251,8 @@ function create_each_block(ctx) {
 				}
 			}
 
-			if (dirty[0] & /*selectedWpt, selectedLevel*/ 17) {
-				toggle_class(tr, "ofp-current-level", /*lv*/ ctx[25].level === /*selectedLevel*/ ctx[0]);
+			if (dirty[0] & /*selectedWpt, selectedLevel*/ 18) {
+				toggle_class(tr, "ofp-current-level", /*lv*/ ctx[26].level === /*selectedLevel*/ ctx[1]);
 			}
 		},
 		d(detaching) {
@@ -1250,17 +1285,17 @@ function create_fragment(ctx) {
 	let t11;
 	let mounted;
 	let dispose;
-	let each_value_2 = ensure_array_like(/*OVERLAY_OPTIONS*/ ctx[6]);
+	let each_value_2 = ensure_array_like(/*OVERLAY_OPTIONS*/ ctx[7]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_2.length; i += 1) {
 		each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
 	}
 
-	let if_block0 = /*currentOverlay*/ ctx[1] === 'wind' && create_if_block_4(ctx);
+	let if_block0 = /*currentOverlayHasLevel*/ ctx[5] && create_if_block_5(ctx);
 
 	function select_block_type(ctx, dirty) {
-		if (/*routeName*/ ctx[2]) return create_if_block_3;
+		if (/*routeName*/ ctx[2]) return create_if_block_4;
 		return create_else_block_1;
 	}
 
@@ -1271,11 +1306,11 @@ function create_fragment(ctx) {
 	return {
 		c() {
 			div0 = element("div");
-			div0.textContent = `${/*title*/ ctx[5]}`;
+			div0.textContent = `${/*title*/ ctx[6]}`;
 			t1 = space();
 			section = element("section");
 			div1 = element("div");
-			div1.textContent = `${/*title*/ ctx[5]}`;
+			div1.textContent = `${/*title*/ ctx[6]}`;
 			t3 = space();
 			div2 = element("div");
 			label0 = element("label");
@@ -1342,17 +1377,17 @@ function create_fragment(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(div1, "click", /*click_handler*/ ctx[13]),
+					listen(div1, "click", /*click_handler*/ ctx[14]),
 					listen(input, "click", clearFileInput),
-					listen(input, "change", /*loadGpx*/ ctx[10])
+					listen(input, "change", /*loadGpx*/ ctx[11])
 				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*currentOverlay, OVERLAY_OPTIONS, setOverlay*/ 194) {
-				each_value_2 = ensure_array_like(/*OVERLAY_OPTIONS*/ ctx[6]);
+			if (dirty[0] & /*currentOverlay, OVERLAY_OPTIONS, setOverlay*/ 385) {
+				each_value_2 = ensure_array_like(/*OVERLAY_OPTIONS*/ ctx[7]);
 				let i;
 
 				for (i = 0; i < each_value_2.length; i += 1) {
@@ -1374,11 +1409,11 @@ function create_fragment(ctx) {
 				each_blocks.length = each_value_2.length;
 			}
 
-			if (/*currentOverlay*/ ctx[1] === 'wind') {
+			if (/*currentOverlayHasLevel*/ ctx[5]) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
-					if_block0 = create_if_block_4(ctx);
+					if_block0 = create_if_block_5(ctx);
 					if_block0.c();
 					if_block0.m(section, t10);
 				}
@@ -1452,43 +1487,74 @@ function clearFileInput(e) {
 }
 
 function instance($$self, $$props, $$invalidate) {
+	let currentOverlayHasLevel;
 	const L = window.L;
 	const store = window.W.store;
 	const { title } = config;
 
 	const OVERLAY_OPTIONS = [
-		{ key: 'wind', icon: '💨', label: 'Wind' },
-		{ key: 'radar', icon: '🌧', label: 'Radar' },
 		{
-			key: 'satellite',
-			icon: '🛰',
-			label: 'Satellite'
-		},
-		{
-			key: 'thunder',
-			icon: '⛈',
-			label: 'Thunder'
-		},
-		{
-			key: 'clouds',
-			icon: '☁️',
-			label: 'Clouds'
+			key: 'wind',
+			icon: '💨',
+			label: 'Wind',
+			hasLevel: true
 		},
 		{
 			key: 'turbulence',
 			icon: '〰️',
-			label: 'Turb'
+			label: 'Turb',
+			hasLevel: true
 		},
-		{ key: 'icing', icon: '🧊', label: 'Icing' },
-		{ key: 'cape', icon: '🌩', label: 'CAPE' }
+		{
+			key: 'radar',
+			icon: '🌧',
+			label: 'Radar',
+			hasLevel: false
+		},
+		{
+			key: 'satellite',
+			icon: '🛰',
+			label: 'Satellite',
+			hasLevel: false
+		},
+		{
+			key: 'thunder',
+			icon: '⛈',
+			label: 'Thunder',
+			hasLevel: false
+		},
+		{
+			key: 'clouds',
+			icon: '☁️',
+			label: 'Clouds',
+			hasLevel: false
+		},
+		{
+			key: 'icing',
+			icon: '🧊',
+			label: 'Icing',
+			hasLevel: false
+		},
+		{
+			key: 'cape',
+			icon: '🌩',
+			label: 'CAPE',
+			hasLevel: false
+		},
+		{
+			key: 'hurricane',
+			icon: '🌀',
+			label: 'Hurricane',
+			hasLevel: false
+		}
 	];
 
 	let currentOverlay = 'wind';
 
 	function setOverlay(key) {
-		$$invalidate(1, currentOverlay = key);
+		$$invalidate(0, currentOverlay = key);
 		store.set('overlay', key);
-		if (key === 'wind') store.set('level', selectedLevel);
+		if (currentOverlayHasLevel) store.set('level', selectedLevel);
 	}
 
 	const LEVEL_OPTIONS = [
@@ -1503,8 +1569,7 @@ function instance($$self, $$props, $$invalidate) {
 	let selectedLevel = '200h';
 
 	function onFlChange() {
-		$$invalidate(1, currentOverlay = 'wind');
-		store.set('overlay', 'wind');
+		store.set('overlay', currentOverlay);
 		store.set('level', selectedLevel);
 	}
 
@@ -1583,6 +1648,11 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	async function fetchWxAtPoint(p) {
+		if (currentOverlay !== 'wind') {
+			$$invalidate(4, selectedWpt = { name: p.name });
+			return;
+		}
+
 		const myId = ++fetchId;
 		const originalLevel = selectedLevel;
 
@@ -1643,7 +1713,7 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		if (fetchId === myId) {
-			$$invalidate(0, selectedLevel = originalLevel);
+			$$invalidate(1, selectedLevel = originalLevel);
 			store.set('level', originalLevel);
 		}
 	}
@@ -1682,22 +1752,27 @@ function instance($$self, $$props, $$invalidate) {
 
 	function select_change_handler() {
 		selectedLevel = select_value(this);
-		$$invalidate(0, selectedLevel);
-		$$invalidate(8, LEVEL_OPTIONS);
+		$$invalidate(1, selectedLevel);
+		$$invalidate(9, LEVEL_OPTIONS);
 	}
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty[0] & /*selectedLevel*/ 1) {
+		if ($$self.$$.dirty[0] & /*currentOverlay*/ 1) {
+			$$invalidate(5, currentOverlayHasLevel = OVERLAY_OPTIONS.find(o => o.key === currentOverlay)?.hasLevel ?? false);
+		}
+
+		if ($$self.$$.dirty[0] & /*selectedLevel*/ 2) {
 			LEVEL_OPTIONS.find(l => l.level === selectedLevel);
 		}
 	};
 
 	return [
-		selectedLevel,
 		currentOverlay,
+		selectedLevel,
 		routeName,
 		waypointCount,
 		selectedWpt,
+		currentOverlayHasLevel,
 		title,
 		OVERLAY_OPTIONS,
 		setOverlay,
@@ -1715,11 +1790,11 @@ function instance($$self, $$props, $$invalidate) {
 class Plugin extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { onopen: 12 }, add_css, [-1, -1]);
+		init(this, options, instance, create_fragment, safe_not_equal, { onopen: 13 }, add_css, [-1, -1]);
 	}
 
 	get onopen() {
-		return this.$$.ctx[12];
+		return this.$$.ctx[13];
 	}
 }
 

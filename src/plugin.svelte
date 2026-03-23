@@ -33,8 +33,8 @@
         </div>
     </div>
 
-    <!-- CRZ高度選択（Windレイヤー時のみ表示） -->
-    {#if currentOverlay === 'wind'}
+    <!-- CRZ高度選択（Wind / Turbulenceレイヤー時に表示） -->
+    {#if currentOverlayHasLevel}
     <div class="ofp-section ofp-fl-row">
         <label class="ofp-label" style="margin-bottom:0">CRZ</label>
         <select class="ofp-fl-select" bind:value={selectedLevel} on:change={onFlChange}>
@@ -60,30 +60,32 @@
     {#if selectedWpt}
         <div class="ofp-section ofp-wx-box">
             <div class="ofp-wpt-name">📍 {selectedWpt.name}</div>
-            <table class="ofp-wind-table">
-                <thead>
-                    <tr>
-                        <th class="ofp-th">高度</th>
-                        <th class="ofp-th" style="text-align:right">風向</th>
-                        <th class="ofp-th" style="text-align:right">風速</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each selectedWpt.levels as lv}
-                        <tr class:ofp-current-level={lv.level === selectedLevel}>
-                            <td class="ofp-td-level">{lv.label}</td>
-                            {#if lv.loading}
-                                <td class="ofp-td-num" colspan="2" style="color:#555">…</td>
-                            {:else if lv.error}
-                                <td class="ofp-td-num" colspan="2" style="color:#f88">—</td>
-                            {:else}
-                                <td class="ofp-td-num">{lv.windDir}°</td>
-                                <td class="ofp-td-num">{lv.windSpd}kt</td>
-                            {/if}
+            {#if selectedWpt.levels}
+                <table class="ofp-wind-table">
+                    <thead>
+                        <tr>
+                            <th class="ofp-th">高度</th>
+                            <th class="ofp-th" style="text-align:right">風向</th>
+                            <th class="ofp-th" style="text-align:right">風速</th>
                         </tr>
-                    {/each}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {#each selectedWpt.levels as lv}
+                            <tr class:ofp-current-level={lv.level === selectedLevel}>
+                                <td class="ofp-td-level">{lv.label}</td>
+                                {#if lv.loading}
+                                    <td class="ofp-td-num" colspan="2" style="color:#555">…</td>
+                                {:else if lv.error}
+                                    <td class="ofp-td-num" colspan="2" style="color:#f88">—</td>
+                                {:else}
+                                    <td class="ofp-td-num">{lv.windDir}°</td>
+                                    <td class="ofp-td-num">{lv.windSpd}kt</td>
+                                {/if}
+                            </tr>
+                        {/each}
+                    </tbody>
+                </table>
+            {/if}
         </div>
     {/if}
 </section>
@@ -104,21 +106,23 @@
 
     // レイヤー切替ボタン
     const OVERLAY_OPTIONS = [
-        { key: 'wind',        icon: '💨', label: 'Wind' },
-        { key: 'radar',       icon: '🌧', label: 'Radar' },
-        { key: 'satellite',   icon: '🛰', label: 'Satellite' },
-        { key: 'thunder',     icon: '⛈', label: 'Thunder' },
-        { key: 'clouds',      icon: '☁️', label: 'Clouds' },
-        { key: 'turbulence',  icon: '〰️', label: 'Turb' },
-        { key: 'icing',       icon: '🧊', label: 'Icing' },
-        { key: 'cape',        icon: '🌩', label: 'CAPE' },
+        { key: 'wind',        icon: '💨', label: 'Wind',      hasLevel: true },
+        { key: 'turbulence',  icon: '〰️', label: 'Turb',      hasLevel: true },
+        { key: 'radar',       icon: '🌧', label: 'Radar',     hasLevel: false },
+        { key: 'satellite',   icon: '🛰', label: 'Satellite', hasLevel: false },
+        { key: 'thunder',     icon: '⛈', label: 'Thunder',   hasLevel: false },
+        { key: 'clouds',      icon: '☁️', label: 'Clouds',    hasLevel: false },
+        { key: 'icing',       icon: '🧊', label: 'Icing',     hasLevel: false },
+        { key: 'cape',        icon: '🌩', label: 'CAPE',      hasLevel: false },
+        { key: 'hurricane',   icon: '🌀', label: 'Hurricane', hasLevel: false },
     ];
     let currentOverlay = 'wind';
+    $: currentOverlayHasLevel = OVERLAY_OPTIONS.find(o => o.key === currentOverlay)?.hasLevel ?? false;
 
     function setOverlay(key: string) {
         currentOverlay = key;
         store.set('overlay', key);
-        if (key === 'wind') store.set('level', selectedLevel);
+        if (currentOverlayHasLevel) store.set('level', selectedLevel);
     }
 
     // Windyの実際の気圧面（CRZ高度帯）
@@ -134,8 +138,7 @@
     $: selectedLevelInfo = LEVEL_OPTIONS.find(l => l.level === selectedLevel)!;
 
     function onFlChange() {
-        currentOverlay = 'wind';
-        store.set('overlay', 'wind');
+        store.set('overlay', currentOverlay);
         store.set('level', selectedLevel);
     }
 
@@ -146,7 +149,7 @@
         windDir: string; windSpd: string;
         loading: boolean; error: boolean;
     }
-    let selectedWpt: { name: string; levels: WptLevel[] } | null = null;
+    let selectedWpt: { name: string; levels?: WptLevel[] } | null = null;
     let fetchId = 0;
 
     // Leafletレイヤー管理
@@ -244,6 +247,12 @@
 
     // ウェイポイントの気象データを取得（全高度帯）
     async function fetchWxAtPoint(p: { lat: number; lon: number; name: string }) {
+        // Wind以外のレイヤーは名前だけ表示
+        if (currentOverlay !== 'wind') {
+            selectedWpt = { name: p.name };
+            return;
+        }
+
         const myId = ++fetchId;
         const originalLevel = selectedLevel;
 
