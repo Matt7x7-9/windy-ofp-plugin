@@ -19,7 +19,22 @@
         />
     </div>
 
-    <!-- CRZ高度選択 -->
+    <!-- レイヤー切替ボタン -->
+    <div class="ofp-section">
+        <label class="ofp-label">レイヤー</label>
+        <div class="ofp-overlay-grid">
+            {#each OVERLAY_OPTIONS as ov}
+                <button
+                    class="ofp-ov-btn"
+                    class:ofp-ov-active={currentOverlay === ov.key}
+                    on:click={() => setOverlay(ov.key)}
+                >{ov.icon} {ov.label}</button>
+            {/each}
+        </div>
+    </div>
+
+    <!-- CRZ高度選択（Windレイヤー時のみ表示） -->
+    {#if currentOverlay === 'wind'}
     <div class="ofp-section ofp-fl-row">
         <label class="ofp-label" style="margin-bottom:0">CRZ</label>
         <select class="ofp-fl-select" bind:value={selectedLevel} on:change={onFlChange}>
@@ -28,6 +43,7 @@
             {/each}
         </select>
     </div>
+    {/if}
 
     <!-- ルート情報 -->
     {#if routeName}
@@ -86,6 +102,25 @@
 
     const { title } = config;
 
+    // レイヤー切替ボタン
+    const OVERLAY_OPTIONS = [
+        { key: 'wind',        icon: '💨', label: 'Wind' },
+        { key: 'radar',       icon: '🌧', label: 'Radar' },
+        { key: 'satellite',   icon: '🛰', label: 'Satellite' },
+        { key: 'thunder',     icon: '⛈', label: 'Thunder' },
+        { key: 'clouds',      icon: '☁️', label: 'Clouds' },
+        { key: 'turbulence',  icon: '〰️', label: 'Turb' },
+        { key: 'icing',       icon: '🧊', label: 'Icing' },
+        { key: 'cape',        icon: '🌩', label: 'CAPE' },
+    ];
+    let currentOverlay = 'wind';
+
+    function setOverlay(key: string) {
+        currentOverlay = key;
+        store.set('overlay', key);
+        if (key === 'wind') store.set('level', selectedLevel);
+    }
+
     // Windyの実際の気圧面（CRZ高度帯）
     const LEVEL_OPTIONS = [
         { level: '150h', label: '150hPa', fl: 450 },
@@ -99,6 +134,7 @@
     $: selectedLevelInfo = LEVEL_OPTIONS.find(l => l.level === selectedLevel)!;
 
     function onFlChange() {
+        currentOverlay = 'wind';
         store.set('overlay', 'wind');
         store.set('level', selectedLevel);
     }
@@ -359,6 +395,29 @@
         font-size: 12px;
         color: #ccc;
         line-height: 1.8;
+    }
+    .ofp-overlay-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        margin-top: 4px;
+    }
+    .ofp-ov-btn {
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 4px;
+        color: #bbb;
+        font-size: 11px;
+        padding: 5px 2px;
+        cursor: pointer;
+        text-align: center;
+        white-space: nowrap;
+        &:hover { background: rgba(255,255,255,0.15); }
+    }
+    .ofp-ov-active {
+        background: rgba(0,170,255,0.25);
+        border-color: rgba(0,170,255,0.6);
+        color: #fff;
     }
     .ofp-wind-table {
         width: 100%;
