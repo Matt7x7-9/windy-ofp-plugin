@@ -114,7 +114,7 @@
         { key: 'clouds',      icon: '☁️', label: 'Clouds',    hasLevel: false },
         { key: 'icing',       icon: '🧊', label: 'Icing',     hasLevel: false },
         { key: 'cape',        icon: '🌩', label: 'CAPE',      hasLevel: false },
-        { key: 'hurricane',   icon: '🌀', label: 'Hurricane', hasLevel: false },
+        { key: 'hurricanes',  icon: '🌀', label: 'Hurricane', hasLevel: false },
     ];
     let currentOverlay = 'wind';
     $: currentOverlayHasLevel = OVERLAY_OPTIONS.find(o => o.key === currentOverlay)?.hasLevel ?? false;
