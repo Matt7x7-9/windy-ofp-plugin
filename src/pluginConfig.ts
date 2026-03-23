@@ -1,16 +1,16 @@
 import type { ExternalPluginConfig } from '@windy/interfaces';
 
 const config: ExternalPluginConfig = {
-    name: 'windy-plugin-my-plugin',
+    name: 'windy-plugin-ofp',
     version: '0.1.0',
-    icon: '🔌',
-    title: 'This is my first plugin',
-    description: 'This is my first plugin.',
-    author: 'John Doe (optional company name)',
+    icon: '✈️',
+    title: 'OFP Route',
+    description: 'OFPのGPXルートをWindy上に表示し、各ウェイポイントの気象データを取得します。',
+    author: 'Takayuki Matsumoto',
     repository: 'https://github.com/windycom/windy-plugin-template',
     desktopUI: 'rhpane',
     mobileUI: 'fullscreen',
-    routerPath: '/my-plugin',
+    routerPath: '/ofp-route',
     private: true,
 };
 
