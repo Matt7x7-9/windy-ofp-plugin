@@ -1,17 +1,17 @@
 const __pluginConfig =  {
   "name": "windy-plugin-ofp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "icon": "✈️",
   "title": "OFP Route",
   "description": "OFPのGPXルートをWindy上に表示し、各ウェイポイントの気象データを取得します。",
   "author": "Takayuki Matsumoto",
-  "repository": "https://github.com/windycom/windy-plugin-template",
+  "repository": "https://github.com/Matt7x7-9/windy-ofp-plugin",
   "desktopUI": "rhpane",
   "mobileUI": "fullscreen",
   "routerPath": "/ofp-route",
   "private": true,
-  "built": 1774246979560,
-  "builtReadable": "2026-03-23T06:22:59.560Z",
+  "built": 1774262096437,
+  "builtReadable": "2026-03-23T10:34:56.437Z",
   "screenshot": "screenshot.jpg"
 };
 
@@ -1153,7 +1153,7 @@ function create_fragment(ctx) {
 			attr(div1, "class", "plugin__title plugin__title--chevron-back");
 			attr(label0, "class", "ofp-label svelte-1qyqnum");
 			attr(input, "type", "file");
-			attr(input, "accept", ".gpx");
+			attr(input, "accept", ".gpx,application/gpx+xml,text/xml,application/xml");
 			attr(input, "class", "ofp-file-input svelte-1qyqnum");
 			attr(div2, "class", "ofp-section svelte-1qyqnum");
 			attr(label1, "class", "ofp-label svelte-1qyqnum");

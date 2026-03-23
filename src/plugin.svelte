@@ -12,7 +12,7 @@
         <label class="ofp-label">GPXファイルを選択</label>
         <input
             type="file"
-            accept=".gpx"
+            accept=".gpx,application/gpx+xml,text/xml,application/xml"
             on:click={clearFileInput}
             on:change={loadGpx}
             class="ofp-file-input"
