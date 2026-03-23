@@ -1,6 +1,6 @@
 const __pluginConfig =  {
   "name": "windy-plugin-ofp",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "icon": "✈️",
   "title": "OFP Route",
   "description": "OFPのGPXルートをWindy上に表示し、各ウェイポイントの気象データを取得します。",
@@ -10,8 +10,8 @@ const __pluginConfig =  {
   "mobileUI": "fullscreen",
   "routerPath": "/ofp-route",
   "private": true,
-  "built": 1774263909254,
-  "builtReadable": "2026-03-23T11:05:09.254Z",
+  "built": 1774264200142,
+  "builtReadable": "2026-03-23T11:10:00.142Z",
   "screenshot": "screenshot.jpg"
 };
 
@@ -1539,12 +1539,6 @@ function instance($$self, $$props, $$invalidate) {
 			key: 'cape',
 			icon: '🌩',
 			label: 'CAPE',
-			hasLevel: false
-		},
-		{
-			key: 'hurricanes',
-			icon: '🌀',
-			label: 'Hurricane',
 			hasLevel: false
 		}
 	];
