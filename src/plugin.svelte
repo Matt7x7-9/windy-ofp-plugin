@@ -108,10 +108,12 @@
     const OVERLAY_OPTIONS = [
         { key: 'wind',        icon: '💨', label: 'Wind',      hasLevel: true },
         { key: 'turbulence',  icon: '〰️', label: 'Turb',      hasLevel: true },
-        { key: 'radar',       icon: '🌧', label: 'Radar',     hasLevel: false },
-        { key: 'satellite',   icon: '🛰', label: 'Satellite', hasLevel: false },
-        { key: 'rainAccu',    icon: '🌦', label: 'Rain/Thunder', hasLevel: false },
-        { key: 'clouds',      icon: '☁️', label: 'Clouds',    hasLevel: false },
+        { key: 'radar',       icon: '🌧', label: 'Radar',      hasLevel: false },
+        { key: 'satellite',   icon: '🛰', label: 'Satellite',  hasLevel: false },
+        { key: 'thunder',     icon: '⛈', label: 'Thunder',    hasLevel: false },
+        { key: 'rain',        icon: '🌦', label: 'Rain',       hasLevel: false },
+        { key: 'cloudtop',    icon: '🌤', label: 'Cloud Top',  hasLevel: false },
+        { key: 'clouds',      icon: '☁️', label: 'Clouds',     hasLevel: false },
         { key: 'icing',       icon: '🧊', label: 'Icing',     hasLevel: false },
         { key: 'cape',        icon: '🌩', label: 'CAPE',      hasLevel: false },
     ];
@@ -406,7 +408,7 @@
     }
     .ofp-overlay-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 4px;
         margin-top: 4px;
     }
