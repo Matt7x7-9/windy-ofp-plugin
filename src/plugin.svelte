@@ -110,7 +110,7 @@
         { key: 'turbulence',  icon: '〰️', label: 'Turb',      hasLevel: true },
         { key: 'radar',       icon: '🌧', label: 'Radar',     hasLevel: false },
         { key: 'satellite',   icon: '🛰', label: 'Satellite', hasLevel: false },
-        { key: 'thunder',     icon: '⛈', label: 'Thunder',   hasLevel: false },
+        { key: 'rainAccu',    icon: '🌦', label: 'Rain/Thunder', hasLevel: false },
         { key: 'clouds',      icon: '☁️', label: 'Clouds',    hasLevel: false },
         { key: 'icing',       icon: '🧊', label: 'Icing',     hasLevel: false },
         { key: 'cape',        icon: '🌩', label: 'CAPE',      hasLevel: false },
